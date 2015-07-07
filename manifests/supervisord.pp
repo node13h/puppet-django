@@ -1,13 +1,13 @@
 class django::supervisord (
 
-  $supervisord_service_enable = $django::params::supervisord_service_enable,
-  $supervisord_service_ensure = $django::params::supervisord_service_ensure,
-  $supervisord_package_ensure = $django::params::supervisord_package_ensure,
+  $service_enable = $django::params::supervisord_service_enable,
+  $service_ensure = $django::params::supervisord_service_ensure,
+  $package_ensure = $django::params::supervisord_package_ensure,
 
-  $supervisord_package_name   = $django::params::supervisord_package_name,
-  $supervisord_service_name   = $django::params::supervisord_service_name,
+  $package_name   = $django::params::supervisord_package_name,
+  $service_name   = $django::params::supervisord_service_name,
 
-  $supervisord_confdir        = $django::params::supervisord_config,
+  $confdir        = $django::params::supervisord_confdir,
 
 ) {
 
@@ -15,14 +15,14 @@ class django::supervisord (
 
   if $::django::manage_supervisord {
 
-    package { $supervisord_package_name:
-      ensure => $supervisord_package_ensure,
+    package { $package_name:
+      ensure => $package_ensure,
     }
 
-    service { $supervisord_service_name:
-      ensure  => $supervisord_service_ensure,
-      enable  => $supervisord_service_enable,
-      require => Package[$supervisord_package_name],
+    service { $service_name:
+      ensure  => $service_ensure,
+      enable  => $service_enable,
+      require => Package[$package_name],
     }
 
   }
