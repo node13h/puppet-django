@@ -1,5 +1,5 @@
 class django (
-  $apps,
+  $apps               = {},
 
   $manage_supervisord = $django::params::manage_supervisord,
 
