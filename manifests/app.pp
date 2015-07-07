@@ -1,0 +1,4 @@
+define django::app (
+
+) {
+}
