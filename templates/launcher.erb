@@ -1,0 +1,27 @@
+#!/bin/bash
+ 
+source <%= @_virtualenv %>/bin/activate
+
+export DJANGO_SETTINGS_MODULE=<%= @settings_module %>
+
+cd <%= @_srcdir %>
+
+# Source and export environment variables for app
+# if any.
+#
+if [ -r .env ]; then
+  set -a
+  source .env
+  set +a
+fi
+
+<% if @wsgi_server == 'gunicorn' %>
+exec gunicorn <%= @wsgi_module %> \
+  --name="<%= @name %>" \
+  --workers=<%= @num_workers %> \
+  --user=<%= @user %> \
+  --group=<%= @group %> \
+  --bind=<%= @bind %> \
+  --log-level=<%= @log_level %> \
+  --log-file=-
+<% end %>
