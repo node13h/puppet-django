@@ -17,12 +17,12 @@ class django::supervisord (
 
     package { $package_name:
       ensure => $package_ensure,
+      before => Service[$service_name],
     }
 
     service { $service_name:
-      ensure  => $service_ensure,
-      enable  => $service_enable,
-      require => Package[$package_name],
+      ensure => $service_ensure,
+      enable => $service_enable,
     }
 
   }

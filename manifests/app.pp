@@ -83,7 +83,6 @@ define django::app (
     file { $supervisord_config:
       ensure  => present,
       content => template('django/supervisord.erb'),
-      require => Package[$::django::supervisord::package_name],
       notify  => Service[$::django::supervisord::service_name],
     }
 
