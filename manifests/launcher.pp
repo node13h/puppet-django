@@ -6,6 +6,7 @@ define django::launcher (
   $srcdir                      = undef,
   $virtualenv                  = undef,
   $settings_module             = undef,
+  $generate_script             = true,
   $path                        = "/usr/local/bin/launch-${name}.sh",
 
   $generate_supervisord_config = true,
@@ -47,15 +48,18 @@ define django::launcher (
   validate_string($_settings_module)
 
   validate_absolute_path($path)
+  validate_bool($generate_script)
+  validate_bool($generate_supervisord_config)
 
-  file { $path:
-    ensure  => present,
-    mode    => 0755,
-    owner   => 'root',
-    content => template('django/launcher.erb'),
-    notify  => Service[$::django::supervisord::service_name],
+  if $generate_script {
+    file { $path:
+      ensure  => present,
+      mode    => 0755,
+      owner   => 'root',
+      content => template('django/launcher.erb'),
+      notify  => Service[$::django::supervisord::service_name],
+    }
   }
-
 
   if $generate_supervisord_config {
 

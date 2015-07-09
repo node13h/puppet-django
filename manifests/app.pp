@@ -9,7 +9,6 @@ define django::app (
   $wsgi_server                 = 'gunicorn',  # 'gunicorn' or 'custom'
   $custom_command              = 'fab start',
 
-  $generate_launcher           = true,
   $launcher_overrides          = {},
 
 ) {
@@ -24,10 +23,7 @@ define django::app (
     validate_string($custom_command)
   }
 
-  validate_bool($generate_launcher)
-  if $generate_launcher {
-    validate_hash($launcher_overrides)
-  }
+  validate_hash($launcher_overrides)
 
   case $wsgi_server {
     'gunicorn': { $command = "gunicorn ${wsgi_module} --name=\"${name}\" --workers=${num_workers} --user=${user} --group=${group} --bind=${bind} --log-level=${log_level} --log-file=-" }
@@ -35,18 +31,16 @@ define django::app (
     default: { fail("Unsupported WSGI server (${wsgi_server})") }
   }
 
-  if $generate_launcher {
-
-    $launcher_props = {
-      user    => $user,
-      app     => $name,
-      command => $command,
-    }
-
-    $launchers = {
-      "${name}-django-app" => merge($launcher_props, $launcher_overrides)
-    }
-
-    create_resources(django::launcher, $launchers)
+  $launcher_props = {
+    user    => $user,
+    app     => $name,
+    command => $command,
   }
+
+  $launchers = {
+    "${name}-django-app" => merge($launcher_props, $launcher_overrides)
+  }
+
+  create_resources(django::launcher, $launchers)
+
 }
