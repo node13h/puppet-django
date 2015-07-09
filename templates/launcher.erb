@@ -1,8 +1,8 @@
 #!/bin/bash
- 
+
 source <%= @_virtualenv %>/bin/activate
 
-export DJANGO_SETTINGS_MODULE=<%= @settings_module %>
+export DJANGO_SETTINGS_MODULE=<%= @_settings_module %>
 
 cd <%= @_srcdir %>
 
