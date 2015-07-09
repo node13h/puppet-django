@@ -13,7 +13,8 @@ define django::app (
   $num_workers                 =  $::processorcount * 2 + 1,
   $log_level                   = 'info',
 
-  $wsgi_server                 = 'gunicorn',  # Only Gunicorn is supported currently, uWSGI may be added later.
+  $wsgi_server                 = 'gunicorn',  # 'gunicorn' or 'custom'
+  $custom_command              = 'fab start',
 
   $generate_supervisord_config = true,
   $supervisord_config          = "$::django::supervisord::confdir/${name}-django-app.conf",
@@ -21,10 +22,6 @@ define django::app (
 ) {
 
   include '::django'
-
-  if $wsgi_server != 'gunicorn' {
-    fail("Unsupported WSGI server (${wsgi_server})")
-  }
 
   validate_string($user)
   validate_string($group)
@@ -59,6 +56,16 @@ define django::app (
   validate_string($bind)
 
   validate_string($log_level)
+
+  if $wsgi_server == 'custom' {
+    validate_string($custom_command)
+  }
+
+  case $wsgi_server {
+    'gunicorn': { $command = "gunicorn ${wsgi_module} --name=\"${name}\" --workers=${num_workers} --user=${user} --group=${group} --bind=${bind} --log-level=${log_level} --log-file=-" }
+    'custom': { $command = $custom_command }
+    default: { fail("Unsupported WSGI server (${wsgi_server})") }
+  }
   
   if $generate_launcher {
 

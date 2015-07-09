@@ -15,13 +15,4 @@ if [ -r .env ]; then
   set +a
 fi
 
-<% if @wsgi_server == 'gunicorn' %>
-exec gunicorn <%= @wsgi_module %> \
-  --name="<%= @name %>" \
-  --workers=<%= @num_workers %> \
-  --user=<%= @user %> \
-  --group=<%= @group %> \
-  --bind=<%= @bind %> \
-  --log-level=<%= @log_level %> \
-  --log-file=-
-<% end %>
+exec <%= @command %>
