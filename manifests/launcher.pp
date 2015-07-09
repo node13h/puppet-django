@@ -5,6 +5,7 @@ define django::launcher (
   $appdir                      = undef,
   $srcdir                      = undef,
   $virtualenv                  = undef,
+  $activate_virtualenv         = true,
   $settings_module             = undef,
   $generate_script             = true,
   $path                        = "/usr/local/bin/launch-${name}.sh",

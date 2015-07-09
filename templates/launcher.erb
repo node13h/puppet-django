@@ -1,6 +1,8 @@
 #!/bin/bash
 
+<% if @activate_virtualenv -%>
 source <%= @_virtualenv %>/bin/activate
+<% end -%>
 
 export DJANGO_SETTINGS_MODULE=<%= @_settings_module %>
 
