@@ -2,6 +2,7 @@ define django::celery::beat (
   $user,
   $log_level          = 'info',
   $schedule_db_file   = 'celerybeat-schedule',
+  $pidfile            = 'celerybeat.pid',
 
   $launcher_overrides = {},
 ) {
@@ -12,7 +13,7 @@ define django::celery::beat (
   validate_string($log_level)
   validate_hash($launcher_overrides)
 
-  $command = "celery -A ${name} beat -l ${log_level} -s ${schedule_db_file}"
+  $command = "celery -A ${name} beat -l ${log_level} --pidfile ${pidfile} -s ${schedule_db_file}"
 
   $launcher_props = {
     user    => $user,
