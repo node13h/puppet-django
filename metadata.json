@@ -2,11 +2,17 @@
   "name": "node13h-django",
   "version": "0.1.0",
   "author": "node13h",
-  "summary": "Puppet module to manage multiple Django apps",
+  "summary": "Manages deployed Django apps",
   "license": "Apache-2.0",
   "source": "https://github.com/node13h/puppet-django",
   "project_page": "https://github.com/node13h/puppet-django",
   "issues_url": "https://github.com/node13h/puppet-django/issues",
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "14.04" ]
+    }
+   ],
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
   ]
