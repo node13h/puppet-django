@@ -14,8 +14,8 @@ Manages deployed Django apps and related stuff
 
 ## Usage
 
-* Application code by default is expected at /home/<username>/Sites/<appname>/base (customizable)
-* virtualenv by default is expected at /home/<username>/Sites/<appname>/venv (customizable)
+* Application code by default is expected at /home/_username_/Sites/_appname_/base (customizable)
+* virtualenv by default is expected at /home/_username_/Sites/_appname_/venv (customizable)
 * for apps - gunicorn package is expected in virtualenv (add to your requirements.txt)
 * setproctitle package is optional in virtualenv
 * apps, workers and beats may reside on different nodes
