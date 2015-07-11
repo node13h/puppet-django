@@ -68,6 +68,7 @@ define django::launcher (
       ensure  => present,
       content => template('django/supervisord.erb'),
       notify  => Service[$::django::supervisord::service_name],
+      require => Package[$::django::supervisord::package_name],
     }
 
   }

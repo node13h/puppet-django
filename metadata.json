@@ -1,6 +1,6 @@
 {
   "name": "node13h-django",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "node13h",
   "summary": "Manages deployed Django apps",
   "license": "Apache-2.0",

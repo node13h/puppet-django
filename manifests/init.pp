@@ -4,7 +4,7 @@ class django (
   $beats              = {},
   $users              = {},
   $keys               = {},
-  $packages           = {},
+  $packages           = [],
 
   $manage_supervisord = $django::params::manage_supervisord,
 
@@ -12,8 +12,16 @@ class django (
 
   validate_hash($apps)
   validate_hash($workers)
+  validate_hash($beats)
+  validate_hash($users)
+  validate_hash($keys)
+  validate_array($packages)
+  
+  validate_bool($manage_supervisord)
 
-  include '::django::supervisord'
+  if $manage_supervisord {
+    include '::django::supervisord'
+  }
 
   create_resources(django::app, $apps)
   create_resources(django::celery::worker, $workers)

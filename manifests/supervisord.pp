@@ -9,22 +9,24 @@ class django::supervisord (
 
   $confdir        = $django::params::supervisord_confdir,
 
-) {
-
-  include '::django'
-
-  if $::django::manage_supervisord {
-
-    package { $package_name:
-      ensure => $package_ensure,
-      before => Service[$service_name],
-    }
-
-    service { $service_name:
-      ensure => $service_ensure,
-      enable => $service_enable,
-    }
-
+) inherits django::params {
+    
+  validate_bool($service_enable)
+  validate_string($service_ensure)
+  validate_string($package_ensure)
+  validate_string($package_name)
+  validate_string($service_name)
+  validate_absolute_path($confdir)
+  
+  package { $package_name:
+    ensure => $package_ensure,
+    before => Service[$service_name],
   }
+
+  service { $service_name:
+    ensure => $service_ensure,
+    enable => $service_enable,
+  }
+
   
 }

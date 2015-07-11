@@ -4,7 +4,7 @@ class django::params {
   $supervisord_service_enable       = true
   $supervisord_service_ensure       = 'running'
   $supervisord_package_ensure       = 'present'
-  $default_supervisord_package_name = [ 'supervisor' ]
+  $default_supervisord_package_name = 'supervisor'
   $default_supervisord_service_name = 'supervisor'
 
   $default_supervisord_confdir      = '/etc/supervisor/conf.d'
