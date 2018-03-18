@@ -55,7 +55,7 @@ define django::launcher (
   if $generate_script {
     file { $path:
       ensure  => present,
-      mode    => 0755,
+      mode    => '0755',
       owner   => 'root',
       content => template('django/launcher.erb'),
       notify  => Service[$::django::supervisord::service_name],
